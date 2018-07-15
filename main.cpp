@@ -3,6 +3,8 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 
+#define ARROW_SIZE 64
+
 int main()
 {
 	sf::ContextSettings settings;
@@ -18,11 +20,31 @@ int main()
 	// see: https://www.sfml-dev.org/tutorials/2.5/graphics-draw.php,
 	// bottom of page.
 
+// = Drawing arrows =========================================================
+
     // Load a sprite to display
     sf::Texture texture;
-    if (!texture.loadFromFile("sizeable_image.png"))
+    if (!texture.loadFromFile("arrow.png"))
         return EXIT_FAILURE;
-    sf::Sprite sprite(texture);
+
+	sf::Sprite left(texture);
+    sf::Sprite down(texture);
+    sf::Sprite up(texture);
+	sf::Sprite right(texture);
+
+	left.setPosition(0,0);
+	down.setPosition(ARROW_SIZE,0);
+	up.setPosition(ARROW_SIZE*2,0);
+	right.setPosition(ARROW_SIZE*3,0);
+
+	// from transformable.
+	// up.setRotation(150); // rotates around the origin, which is the
+	// top-left pixel. there's also rotate, which just
+	// adds to the current rotation.
+	// for now, gonna skip rotations because i'd rather figure out how to
+	// have arrows happen.
+
+// ==========================================================================
 
     // Create a graphical text to display
     sf::Font font;
@@ -73,14 +95,17 @@ int main()
 				if (event.key.code == sf::Keyboard::Escape)
 					window.close();
 				if (event.key.code == sf::Keyboard::E)
-					sprite.move(sf::Vector2f(5, 10));
+					down.move(sf::Vector2f(0, 10));
 			}
 				
         }
         // Clear screen
         window.clear();
         // Draw the sprite
-        window.draw(sprite);
+        window.draw(left);
+        window.draw(down);
+        window.draw(up);
+        window.draw(right);
         // Draw the string
         window.draw(text);
         // Update the window
