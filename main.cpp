@@ -4,6 +4,10 @@
 #include <iostream>
 
 #define ARROW_SIZE 64
+#define LEFT_ARROW 0
+#define DOWN_ARROW 1
+#define UP_ARROW 2
+#define RIGHT_ARROW 3
 
 int main()
 {
@@ -27,15 +31,14 @@ int main()
     if (!texture.loadFromFile("arrow.png"))
         return EXIT_FAILURE;
 
+	// we'll probably turn these into receptors eventually
 	sf::Sprite left(texture);
     sf::Sprite down(texture);
     sf::Sprite up(texture);
 	sf::Sprite right(texture);
 
-	left.setPosition(0,0);
-	down.setPosition(ARROW_SIZE,0);
-	up.setPosition(ARROW_SIZE*2,0);
-	right.setPosition(ARROW_SIZE*3,0);
+	// copied in
+	std::vector<sf::Sprite> arrow_vector = {left, down, up, right};
 
 	// from transformable.
 	// up.setRotation(150); // rotates around the origin, which is the
@@ -44,7 +47,7 @@ int main()
 	// for now, gonna skip rotations because i'd rather figure out how to
 	// have arrows happen.
 
-// ==========================================================================
+// = Drawing arrows End======================================================
 
     // Create a graphical text to display
     sf::Font font;
@@ -59,24 +62,6 @@ int main()
 
     // Play the music
     music.play();
-
-/*
-	// create arrow
-	// create an array of 3 vertices that define a triangle primitive
-	sf::VertexArray arrow(sf::arrows, 3);
-
-	// define the position of the arrow's points
-	arrow[0].position = sf::Vector2f(10, 10);
-	arrow[1].position = sf::Vector2f(100, 10);
-	arrow[2].position = sf::Vector2f(100, 100);
-
-	// define the color of the arrow's points
-	arrow[0].color = sf::Color::Red;
-	arrow[1].color = sf::Color::Blue;
-	arrow[2].color = sf::Color::Green;
-
-	// texture coordinates here, we'll see that later
-*/
 
     // Start the game loop
     while (window.isOpen())
@@ -101,11 +86,16 @@ int main()
         }
         // Clear screen
         window.clear();
-        // Draw the sprite
-        window.draw(left);
-        window.draw(down);
-        window.draw(up);
-        window.draw(right);
+
+        // Draw the sprites 
+		int i = 0;
+		for ( auto &sprite : arrow_vector )
+		{
+			sprite.setPosition( ARROW_SIZE*i, 0 );
+			window.draw(sprite);
+			i++;
+		}
+
         // Draw the string
         window.draw(text);
         // Update the window
