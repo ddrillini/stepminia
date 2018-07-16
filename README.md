@@ -4,6 +4,10 @@
  * m630 Cel
  * Works on our cab
 
+### Style
+ * Tabs
+ * 75 character wide lines
+
 ### Installation
 ```
 # Install SFML https://www.sfml-dev.org/tutorials/2.5/
