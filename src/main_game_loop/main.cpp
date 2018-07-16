@@ -16,58 +16,37 @@
 
 int main()
 {
+
+	std::cout << "Note that stepminia must currently be run from the\
+executable's directory, because it expects the assets folder to be in the\
+current working directory." << std::endl;
+
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
 	// To draw stuff, you can also use OpenGL directly and totally ignore
 	// the sfml-graphics module. sf::Window internally creates an OpenGL
 	// context and is ready to accept your OpenGL calls.
-	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "stepminia",
-		sf::Style::None, settings);
+	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
+"stepminia", sf::Style::None, settings);
 
 	// we may want to offload the window drawing to a thread.
 	// see: https://www.sfml-dev.org/tutorials/2.5/graphics-draw.php,
 	// bottom of page.
 
-// = Drawing arrows =========================================================
-
-    // Load a sprite to display
-    sf::Texture texture;
-    if (!texture.loadFromFile("arrow.png"))
-        return EXIT_FAILURE;
-
-	// we'll probably turn these into receptors eventually
-	sf::Sprite left(texture), down(texture), up(texture), right(texture);
-
-	// copied in
-	std::vector<sf::Sprite> arrow_vector = {left, down, up, right};
-
-	// set arrow positions
-	int offset = -ARROW_SIZE * 2;
-	for ( auto &sprite : arrow_vector )
-	{
-		sprite.setPosition(WINDOW_X_CENTER + offset, 32);
-		offset += ARROW_SIZE;
-	}
-
-	// from transformable.
-	// up.setRotation(150); // rotates around the origin, which is the
-	// top-left pixel. there's also rotate, which just
-	// adds to the current rotation.
-	// for now, gonna skip rotations because i'd rather figure out how to
-	// have arrows happen.
-
-// = Drawing arrows End======================================================
+// trying a way of organizing code that i haven't before.
+// can you tell i write a lot of c?
+#include "receptors.cpp"
 
     // Create a graphical text to display
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("assets/arial.ttf"))
         return EXIT_FAILURE;
     sf::Text text("owo what's this?", font, 50);
 
     // Load a music to play
     sf::Music music;
-    if (!music.openFromFile("nice_music.ogg"))
+    if (!music.openFromFile("assets/nice_music.ogg"))
         return EXIT_FAILURE;
 
     // Play the music
