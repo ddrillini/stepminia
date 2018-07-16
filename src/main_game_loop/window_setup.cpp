@@ -1,3 +1,5 @@
+// included by main.cpp
+
 sf::ContextSettings settings;
 settings.antialiasingLevel = 8;
 

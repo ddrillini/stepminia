@@ -1,3 +1,4 @@
+// included by main.cpp
 // Start the game loop
 while (window.isOpen())
 {
@@ -16,16 +17,16 @@ while (window.isOpen())
 				window.close();
 
 			if (event.key.code == sf::Keyboard::I)
-				arrow_vector[LEFT].move(sf::Vector2f(0, 10));
+				receptor_vector[LEFT].move(sf::Vector2f(0, 10));
 
 			if (event.key.code == sf::Keyboard::D)
-				arrow_vector[DOWN].move(sf::Vector2f(0, 10));
+				receptor_vector[DOWN].move(sf::Vector2f(0, 10));
 
 			if (event.key.code == sf::Keyboard::F)
-				arrow_vector[UP].move(sf::Vector2f(0, 10));
+				receptor_vector[UP].move(sf::Vector2f(0, 10));
 
 			if (event.key.code == sf::Keyboard::H)
-				arrow_vector[RIGHT].move(sf::Vector2f(0, 10));
+				receptor_vector[RIGHT].move(sf::Vector2f(0, 10));
 		}
 			
 	}
@@ -34,7 +35,7 @@ while (window.isOpen())
 
 	// Draw the sprites 
 	int i = 0;
-	for ( auto &sprite : arrow_vector )
+	for ( auto &sprite : receptor_vector )
 		window.draw(sprite);
 
 	// Update the window
