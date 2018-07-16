@@ -3,9 +3,11 @@
 // really put includes inside of these files; they should go outside of the
 // main function.
 
+sf::Texture receptor_temp_texture = receptor_texture_3;
+
 // we'll probably turn these into receptors eventually
-sf::Sprite left(receptor_dark_texture), down(receptor_dark_texture), up(receptor_dark_texture),
-	right(receptor_dark_texture);
+sf::Sprite left(receptor_temp_texture), down(receptor_temp_texture), up(receptor_temp_texture),
+	right(receptor_temp_texture);
 
 std::vector<sf::Sprite> receptor_vector = {left, down, up, right};
 
@@ -28,4 +30,4 @@ receptor_vector[RIGHT].rotate(270);
 sf::Clock receptor_clock;
 sf::Time receptor_time = receptor_clock.getElapsedTime();
 
-
+std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, receptor_texture_2 }}};

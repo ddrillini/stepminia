@@ -31,16 +31,7 @@ while (window.isOpen())
 			
 	}
 
-	// receptor blinking
-	receptor_time = receptor_clock.getElapsedTime();
-
-	if ( receptor_time >= sf::milliseconds(500) )
-	{
-		receptor_clock.restart();
-		receptor_dark_texture.swap(receptor_bright_texture);
-	}
-		
-	
+#include "receptor_blinking.cpp"
 
 // = Redrawing ==============================================================
 

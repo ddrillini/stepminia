@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <queue>
+
 #include "../includes.h"
 
 int main()
