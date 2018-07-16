@@ -15,6 +15,8 @@ current working directory." << std::endl;
 
 #include "window_setup.cpp"
 
+#include "textures.cpp"
+
 #include "receptors.cpp"
 
 #include "main_loop.cpp"

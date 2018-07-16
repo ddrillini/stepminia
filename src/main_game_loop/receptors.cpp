@@ -3,14 +3,9 @@
 // really put includes inside of these files; they should go outside of the
 // main function.
 
-// Load a sprite to display
-sf::Texture receptor_texture;
-if (!receptor_texture.loadFromFile("assets/receptor.png"))
-	return EXIT_FAILURE;
-
 // we'll probably turn these into receptors eventually
-sf::Sprite left(receptor_texture), down(receptor_texture), up(receptor_texture),
-	right(receptor_texture);
+sf::Sprite left(receptor_dark_texture), down(receptor_dark_texture), up(receptor_dark_texture),
+	right(receptor_dark_texture);
 
 std::vector<sf::Sprite> receptor_vector = {left, down, up, right};
 
@@ -29,10 +24,8 @@ receptor_vector[LEFT].rotate(90);
 receptor_vector[UP].rotate(180);
 receptor_vector[RIGHT].rotate(270);
 
-// from transformable.
-// up.setRotation(150); // rotates around the origin, which is the
-// top-left pixel. there's also rotate, which just
-// adds to the current rotation.
-// for now, gonna skip rotations because i'd rather figure out how to
-// have arrows happen.
+// receptor blinking
+sf::Clock receptor_clock;
+sf::Time receptor_time = receptor_clock.getElapsedTime();
+
 
