@@ -1,6 +1,6 @@
 // included from main_loop.cpp
 
-// receptor blinking
+// blinking
 receptor_time = receptor_clock.getElapsedTime();
 if ( receptor_time >= sf::milliseconds(1000) )
 {

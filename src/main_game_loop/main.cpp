@@ -3,8 +3,17 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <queue>
+#include <ctime>
 
 #include "../includes.h"
+
+// Scales a receptor based on the time since a given
+// key was last pressed. Range: 0 to .1 seconds
+void scale_receptor(sf::Time t, sf::Sprite & receptor)
+{
+	float scale = t.asSeconds() * 2 + .8;
+	receptor.setScale(scale, scale);
+}
 
 int main()
 {
@@ -19,7 +28,7 @@ current working directory." << std::endl;
 
 #include "textures.cpp"
 
-#include "receptors.cpp"
+#include "receptor_setup.cpp"
 
 #include "main_loop.cpp"
 

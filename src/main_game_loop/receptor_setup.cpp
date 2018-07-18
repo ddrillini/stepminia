@@ -1,15 +1,12 @@
 // included by main.cpp
-// one shitty thing about organizing code in this way is that you can't
-// really put includes inside of these files; they should go outside of the
-// main function.
+
+// initialize four clocks for receptor shrinking
+std::vector<sf::Clock> key_clock_vector( 4, sf::Clock() );
 
 sf::Texture receptor_temp_texture = receptor_texture_3;
 
-// we'll probably turn these into receptors eventually
-sf::Sprite left(receptor_temp_texture), down(receptor_temp_texture), up(receptor_temp_texture),
-	right(receptor_temp_texture);
-
-std::vector<sf::Sprite> receptor_vector = {left, down, up, right};
+// four sprites initialized with receptor_temp_texture
+std::vector<sf::Sprite> receptor_vector( 4, sf::Sprite(receptor_temp_texture) );
 
 int offset = ARROW_SIZE * -1.5;
 for ( auto &sprite : receptor_vector )
