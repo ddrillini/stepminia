@@ -1,6 +1,12 @@
-#include "base_ui_class.hpp"
+#include "base_screenstate.hpp"
 
-class playfield : public base_ui_class
+// TODO: Construtors that give sprites for the vector?
+
+class playfield : public base_screenstate
 {
+	public:
+		
 
 };
+
+

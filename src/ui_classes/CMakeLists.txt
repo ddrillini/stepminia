@@ -3,5 +3,5 @@
 # then, you can add them as sources in a top level project.
 
 # i'm not sure what the difference is between an object and static library. either works.
-add_library(ui_classes OBJECT base_ui_class.cpp menu.cpp playfield.cpp)
+add_library(ui_classes OBJECT base_screenstate.hpp menu.hpp playfield.hpp)
 target_link_libraries(ui_classes sfml-graphics)

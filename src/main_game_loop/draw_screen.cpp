@@ -24,5 +24,9 @@ for ( auto &sprite : receptor_vector )
 	window.draw(sprite);
 // ==========================================================================
 
+// = Draw from screenstate vector ===========================================
+for ( auto &sprite : playfield1.sprite_vector )
+	window.draw(sprite);
+
 // Update the window
 window.display();

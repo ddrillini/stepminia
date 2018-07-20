@@ -7,6 +7,10 @@
 
 #include "../includes.h"
 
+// TODO: make a file that includes all of these
+#include "../ui_classes/base_screenstate.hpp"
+#include "../ui_classes/playfield.hpp"
+
 // Scales a receptor based on the time since a given
 // key was last pressed. Range: 0 to .1 seconds
 void scale_receptor(sf::Time t, sf::Sprite & receptor)
@@ -27,6 +31,10 @@ current working directory." << std::endl;
 #include "window_setup.cpp"
 
 #include "textures.cpp"
+
+	playfield playfield1;
+	sf::Sprite arrow(arrow_texture);
+	playfield1.sprite_vector.push_back(arrow);
 
 #include "receptor_setup.cpp"
 
