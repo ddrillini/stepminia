@@ -30,11 +30,12 @@ current working directory." << std::endl;
 
 #include "window_setup.cpp"
 
-#include "textures.cpp"
-
-	playfield playfield1;
-	sf::Sprite arrow(arrow_texture);
-	playfield1.sprite_vector.push_back(arrow);
+	// base_screenstate screenstate;
+	// because this is an abstract base class, we can't instantiate it.
+	// however, i want to use it so that i can have any child be the name
+	// "screenstate" and use that to eg draw things
+	// i think i can just use children in places that expect the parent type
+	playfield screenstate; // TODO: rename this to playfield_inst
 
 #include "receptor_setup.cpp"
 

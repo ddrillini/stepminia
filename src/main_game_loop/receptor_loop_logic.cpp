@@ -1,5 +1,6 @@
 // included from main_loop.cpp
 
+/*
 // blinking
 receptor_time = receptor_clock.getElapsedTime();
 if ( receptor_time >= sf::milliseconds(1000) )
@@ -13,4 +14,4 @@ if ( receptor_time >= sf::milliseconds(1000) )
 
 	receptor_texture_0.swap(receptor_temp_texture);
 }
-
+*/
