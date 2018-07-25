@@ -6,17 +6,15 @@ if (event.type == sf::Event::KeyPressed)
 
 	// TODO: this can probably be some kind of map to be less code.
 	// we should probably use enums instead of #define's anyway.
-/*
 	if (event.key.code == sf::Keyboard::I)
-		key_clock_vector[LEFT].restart();
+		screenstate.shrink_receptor(LEFT);
 
 	if (event.key.code == sf::Keyboard::D)
-		key_clock_vector[DOWN].restart();
+		screenstate.shrink_receptor(DOWN);
 
 	if (event.key.code == sf::Keyboard::F)
-		key_clock_vector[UP].restart();
+		screenstate.shrink_receptor(UP);
 
 	if (event.key.code == sf::Keyboard::H)
-		key_clock_vector[RIGHT].restart();
-*/
+		screenstate.shrink_receptor(RIGHT);
 }

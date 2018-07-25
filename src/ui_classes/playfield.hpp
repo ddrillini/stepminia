@@ -5,19 +5,20 @@ class playfield : public base_screenstate
 {
 public:
 	playfield();
-
+	void loop_function();
+	void shrink_receptor(int arrow_num);
 	// do we need to dealloc the vector in a destructor?
 private:
-
 	void load_textures();
 	void create_sprites();
 	void create_logic();
+
+	void scale_receptor(sf::Time t, sf::Sprite & receptor);
 
 	// = Textures =======================================================
 	sf::Texture arrow_texture;
 
 	// we should make an "animated sprite" class and offload logic into that.
-	// these should probably be distinct, they're different beats
 	sf::Texture receptor_texture_0, receptor_texture_1, receptor_texture_2, receptor_texture_3;
 	sf::Texture receptor_temp_texture;
 
@@ -36,9 +37,7 @@ playfield::playfield()
 	// however, the this-> is optional
 
 	create_sprites();
-
-	sf::Sprite arrow(arrow_texture);
-	sprite_draw_vector.push_back(arrow);
+	create_logic();
 }
 
 void playfield::load_textures()
@@ -74,8 +73,8 @@ void playfield::load_textures()
 
 void playfield::create_sprites()
 {
+// = Create receptor sprites ================================================
 	// create 4 sprites in the receptor vector
-
 	receptor_vector = std::vector<sf::Sprite> ( 4, sf::Sprite(receptor_temp_texture) );
 	// create an anonymous vector to use that convenient count constructor
 	// copy construct it into the class's receptor_vector
@@ -100,28 +99,41 @@ void playfield::create_sprites()
 
 	// push them into the draw_vector
 	for ( auto &sprite : receptor_vector )
-		this->sprite_draw_vector.push_back(sprite);
+		this->sprite_draw_vector.push_back(&sprite);
 }
 
 void playfield::create_logic()
 {
-	// ( 4, sf::Clock() );
 	// initialize four clocks for receptor shrinking
-	// std::vector<sf::Clock> receptor_clock_vector( 4, sf::Clock() );
-
-
-// = Receptor shrinking on keypress =========================================
-/*
-// for each key's clock
-for (int i=0; i < key_clock_vector.size(); i++)
-{
-	// getElapsedTime
-	sf::Time t = key_clock_vector[i].getElapsedTime();
-
-	// if it's been less than .1 seconds, scale
-	if ( t < sf::seconds(.1) )
-		scale_receptor(t, receptor_vector[i]);
+	// initialize an anonymous vector and copy it into the class
+	receptor_clock_vector = std::vector<sf::Clock> ( 4, sf::Clock() );
 }
-*/
-// ==========================================================================
+
+// Scales a receptor based on the time since a given
+// key was last pressed. Range: 0 to .1 seconds
+void playfield::scale_receptor(sf::Time t, sf::Sprite & receptor)
+{
+	float scale = t.asSeconds() * 2 + .8;
+	receptor.setScale(scale, scale);
+}
+
+void playfield::loop_function()
+{
+	// = Receptor shrinking on keypress =====================================
+	// for each key's clock
+	for (int i=0; i < receptor_clock_vector.size(); i++)
+	{
+		// getElapsedTime
+		sf::Time t = receptor_clock_vector[i].getElapsedTime();
+
+		// if it's been less than .1 seconds, scale
+		if ( t < sf::seconds(.1) )
+			scale_receptor(t, receptor_vector[i]);
+	}
+}
+
+// actually just resets the clock.
+void playfield::shrink_receptor(int arrow_num)
+{
+	receptor_clock_vector[arrow_num].restart();
 }

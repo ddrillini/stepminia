@@ -19,6 +19,8 @@ while (window.isOpen())
 
 #include "receptor_loop_logic.cpp"
 
+	screenstate.loop_function();
+
 #include "draw_screen.cpp"
 
 }

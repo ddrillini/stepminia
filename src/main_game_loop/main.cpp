@@ -11,14 +11,6 @@
 #include "../ui_classes/base_screenstate.hpp"
 #include "../ui_classes/playfield.hpp"
 
-// Scales a receptor based on the time since a given
-// key was last pressed. Range: 0 to .1 seconds
-void scale_receptor(sf::Time t, sf::Sprite & receptor)
-{
-	float scale = t.asSeconds() * 2 + .8;
-	receptor.setScale(scale, scale);
-}
-
 int main()
 {
 	std::cout << "Note that stepminia must currently be run from the \

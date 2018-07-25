@@ -7,7 +7,8 @@
 class base_screenstate
 {
 	public:
-		std::vector<sf::Sprite> sprite_draw_vector;
+		std::vector<sf::Sprite *> sprite_draw_vector;
+		virtual void loop_function() = 0;
 	private:
 		// virtual means we defers to a child classes' implementation.
 		virtual void load_textures() = 0;
