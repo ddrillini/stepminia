@@ -1,6 +1,4 @@
 // included by main.cpp
-// Start the game loop
-
 while (window.isOpen())
 {
 	sf::Time current_time;
