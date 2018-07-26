@@ -10,6 +10,7 @@
 // TODO: make a file that includes all of these
 #include "../ui_classes/base_screenstate.hpp"
 #include "../ui_classes/playfield.hpp"
+#include "../ui_classes/menu.hpp"
 
 int main()
 {
@@ -27,7 +28,11 @@ current working directory." << std::endl;
 	// however, i want to use it so that i can have any child be the name
 	// "screenstate" and use that to eg draw things
 	// i think i can just use children in places that expect the parent type
-	playfield screenstate; // TODO: rename this to playfield_inst
+	base_screenstate * screenstate;
+	playfield playfield_inst;
+	menu menu_inst;
+
+	screenstate = &playfield_inst;
 
 #include "receptor_setup.cpp"
 

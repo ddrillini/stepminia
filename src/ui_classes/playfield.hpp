@@ -5,13 +5,14 @@ class playfield : public base_screenstate
 {
 public:
 	playfield();
-	void loop_function();
+	void loop_function() override;
 	void shrink_receptor(int arrow_num);
+	void input_handler(sf::Keyboard::Key key) override;
 	// do we need to dealloc the vector in a destructor?
 private:
-	void load_textures();
-	void create_sprites();
-	void create_logic();
+	void load_textures() override;
+	void create_sprites() override;
+	void create_logic() override;
 
 	void scale_receptor(sf::Time t, sf::Sprite & receptor);
 
@@ -136,4 +137,19 @@ void playfield::loop_function()
 void playfield::shrink_receptor(int arrow_num)
 {
 	receptor_clock_vector[arrow_num].restart();
+}
+
+void playfield::input_handler(sf::Keyboard::Key key)
+{
+	if (key == sf::Keyboard::I)
+		shrink_receptor(LEFT);
+	if (key == sf::Keyboard::D)
+		shrink_receptor(DOWN);
+
+	if (key == sf::Keyboard::F)
+		shrink_receptor(UP);
+
+	if (key == sf::Keyboard::H)
+		shrink_receptor(RIGHT);
+
 }
