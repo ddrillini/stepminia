@@ -22,9 +22,11 @@ private:
 	// we should make an "animated sprite" class and offload logic into that.
 	sf::Texture receptor_texture_0, receptor_texture_1, receptor_texture_2, receptor_texture_3;
 	sf::Texture receptor_temp_texture;
+	sf::Texture bg_texture;
 
 	// = Sprites ========================================================
 
+	sf::Sprite bg;
 	std::vector<sf::Sprite> receptor_vector;
 	std::vector<sf::Clock> receptor_clock_vector;
 };
@@ -70,6 +72,9 @@ void playfield::load_textures()
 		abort();
 
 	receptor_temp_texture = receptor_texture_3;
+
+	if (!bg_texture.loadFromFile("assets/bg.png"))
+		abort();
 }
 
 void playfield::create_sprites()
@@ -101,6 +106,10 @@ void playfield::create_sprites()
 	// push them into the draw_vector
 	for ( auto &sprite : receptor_vector )
 		this->sprite_draw_vector.push_back(&sprite);
+
+	// bg sprite
+	bg = sf::Sprite (bg_texture);
+	sprite_draw_vector.insert(sprite_draw_vector.begin(), &bg);
 }
 
 void playfield::create_logic()
