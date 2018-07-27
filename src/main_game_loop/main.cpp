@@ -5,12 +5,7 @@
 #include <queue>
 #include <ctime>
 
-#include "../includes.h"
-
-// TODO: make a file that includes all of these
-#include "../ui_classes/base_screenstate.hpp"
-#include "../ui_classes/playfield.hpp"
-#include "../ui_classes/menu.hpp"
+#include "../all_includes.h"
 
 int main()
 {
