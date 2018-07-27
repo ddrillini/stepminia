@@ -150,15 +150,15 @@ void playfield::shrink_receptor(int arrow_num)
 
 void playfield::input_handler(sf::Keyboard::Key key)
 {
-	if (key == sf::Keyboard::I)
+	if (key == sf::Keyboard::Q)
 		shrink_receptor(LEFT);
-	if (key == sf::Keyboard::D)
+	if (key == sf::Keyboard::W)
 		shrink_receptor(DOWN);
 
-	if (key == sf::Keyboard::F)
+	if (key == sf::Keyboard::O)
 		shrink_receptor(UP);
 
-	if (key == sf::Keyboard::H)
+	if (key == sf::Keyboard::P)
 		shrink_receptor(RIGHT);
 
 }

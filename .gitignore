@@ -2,3 +2,10 @@
 *.sw*
 a.out
 build/
+/SFML-2.5.0
+/.vs
+/x64/Release
+/StepminiaVS.sln
+/StepminiaVS.vcxproj
+/StepminiaVS.vcxproj.filters
+/StepminiaVS.vcxproj.user
