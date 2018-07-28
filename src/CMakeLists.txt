@@ -17,7 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/stepminia)
 find_package(SFML 2.5 COMPONENTS graphics audio window REQUIRED)
 
 add_subdirectory(main_game_loop)
-add_subdirectory(ui_classes)
+add_subdirectory(header)
 
 add_executable(stepminia $<TARGET_OBJECTS:main_game_loop> ui_classes)
 target_link_libraries(stepminia sfml-graphics sfml-audio sfml-window)

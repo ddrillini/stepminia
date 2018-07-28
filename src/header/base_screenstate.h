@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-// apparently you can't have dashes in identifiers?
 class base_screenstate
 {
 	public:
@@ -12,11 +11,9 @@ class base_screenstate
 		virtual void input_handler(sf::Keyboard::Key key) = 0;
 		virtual ~base_screenstate() {}
 	private:
-		// virtual means we defers to a child classes' implementation.
 		virtual void load_textures() = 0;
 		virtual void create_sprites() = 0;
 		virtual void create_logic() = 0;
 };
 
-// the default constructor for screenstate should load all the stuff needed
-// initially into the vector.
+// the default constructor for screenstate should load all the stuff needed initially into the vector.
