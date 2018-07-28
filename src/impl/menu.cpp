@@ -9,10 +9,7 @@ menu::menu()
 
 menu::~menu()
 {
-	for (auto * sprite : sprite_draw_vector) {
-		delete sprite;
-	}
-	sprite_draw_vector.clear();
+
 }
 
 void menu::loop_function()

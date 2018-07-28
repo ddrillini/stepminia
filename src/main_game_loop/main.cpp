@@ -7,12 +7,6 @@
 
 #include "../all_includes.h"
 
-#ifdef _WIN32
-#define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h>  
-#endif
-
 int main()
 {
 	std::cout << "Note that stepminia must currently be run from the"
@@ -22,17 +16,17 @@ int main()
 	// WINDOW SETUP ------------------------------------------------------
 
 	// OpenGL settings. Aliasing, bit depth, etc.
-	// sf::ContextSettings context_settings;
-	// context_settings.antialiasingLevel = 8;
+	sf::ContextSettings context_settings;
+	context_settings.antialiasingLevel = 8;
 
 	// To draw stuff, you can also use OpenGL directly and totally ignore
 	// the sfml-graphics module. sf::Window internally creates an OpenGL
 	// context and is ready to accept your OpenGL calls.
-	//sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
-	//	"stepminia", sf::Style::None, context_settings);
+	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),	
+		"stepminia", sf::Style::None, context_settings);
 
-	//window.setKeyRepeatEnabled(false);
-	//window.setFramerateLimit(60);
+	window.setKeyRepeatEnabled(false);
+	window.setFramerateLimit(60);
 
 	// sf::Style::Fullscreen on mac prints "The requested video mode is not
 	// available, switching to a valid mode" and then goes fullscreen, but
@@ -44,81 +38,83 @@ int main()
 
 	// -------------------------------------------------------------------
 
-	////Game States
-	////playfield playfield_inst;
-	////menu menu_inst;
+	//Game States
+	playfield playfield_inst;
+	menu menu_inst;
 
-	////Pointer for housing state
-	////base_screenstate* screenstate(&playfield_inst);
+	//Pointer for housing state
+	base_screenstate* screenstate(&playfield_inst);
 
-	//// RECEPTOR SETUP -----------------------------------------------------------------------
+	// RECEPTOR SETUP -----------------------------------------------------------------------
 
-	///*
-	//// receptor blinking
-	//sf::Clock receptor_clock;
-	//sf::Time receptor_time = receptor_clock.getElapsedTime();
+	/*
+	// receptor blinking
+	sf::Clock receptor_clock;
+	sf::Time receptor_time = receptor_clock.getElapsedTime();
 
-	//std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, receptor_texture_2 }}};
-	//*/
+	std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, receptor_texture_2 }}};
+	*/
 
-	//// --------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------
 
-	//// MAIN LOOP ----------------------------------------------------------------------------
+	// MAIN LOOP ----------------------------------------------------------------------------
 
-	//while (window.isOpen())
-	//{
-	//	sf::Time current_time;
+	while (window.isOpen())
+	{
+		sf::Time current_time;
 
-	//	// Process events
-	//	sf::Event event;
-	//	while (window.pollEvent(event))
-	//	{
-	//		if (event.type == sf::Event::KeyPressed)
-	//		{
-	//			if (event.key.code == sf::Keyboard::Escape)
-	//				window.close();
+		// Process events
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					window.close();
+				}
 
-	//			if (event.key.code == sf::Keyboard::Num1)
-	//				screenstate = &menu_inst;
+				if (event.key.code == sf::Keyboard::Num1) 
+				{
+					screenstate = &menu_inst;
+				}
+					
+				if (event.key.code == sf::Keyboard::Num2) 
+				{
+					screenstate = &playfield_inst;
+				}	
 
-	//			if (event.key.code == sf::Keyboard::Num2)
-	//				screenstate = &playfield_inst;
+				screenstate->input_handler(event.key.code);
+			}
+		}
 
-	//			screenstate->input_handler(event.key.code);
-	//		}
-	//	}
+	/*
+	// blinking
+	receptor_time = receptor_clock.getElapsedTime();
+	if ( receptor_time >= sf::milliseconds(1000) )
+	{
+	receptor_clock.restart();
 
-	//	/*
-	//	// blinking
-	//	receptor_time = receptor_clock.getElapsedTime();
-	//	if ( receptor_time >= sf::milliseconds(1000) )
-	//	{
-	//	receptor_clock.restart();
+	// rotate the queue
+	receptor_texture_queue.push(receptor_temp_texture);
+	receptor_temp_texture = receptor_texture_queue.front();
+	receptor_texture_queue.pop();
 
-	//	// rotate the queue
-	//	receptor_texture_queue.push(receptor_temp_texture);
-	//	receptor_temp_texture = receptor_texture_queue.front();
-	//	receptor_texture_queue.pop();
+	receptor_texture_0.swap(receptor_temp_texture);
+	}
+	*/
+	screenstate->loop_function();
 
-	//	receptor_texture_0.swap(receptor_temp_texture);
-	//	}
-	//	*/
-	//	screenstate->loop_function();
+	// = Clear screen ===========================================================
+		window.clear();
 
-	//	// = Clear screen ===========================================================
-	//	window.clear();
+	// = Draw from screenstate vector ===========================================
+	for (auto &sprite : screenstate->sprite_draw_vector)
+		window.draw(*sprite);
 
-	//	// = Draw from screenstate vector ===========================================
-	//	for (auto &sprite : screenstate->sprite_draw_vector)
-	//		window.draw(*sprite);
+	// = Update the window ======================================================
+		window.display();
+	}
 
-	//	// = Update the window ======================================================
-	//	window.display();
-	//}
-
-	//// --------------------------------------------------------------------------------------
-
-	#ifdef _WIN32
-	_CrtDumpMemoryLeaks();
-	#endif
+	// --------------------------------------------------------------------------------------
 }

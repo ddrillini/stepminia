@@ -14,10 +14,7 @@ playfield::playfield()
 
 playfield::~playfield()
 {
-	for (auto * sprite : sprite_draw_vector) {
-		delete sprite;
-	}
-	sprite_draw_vector.clear();
+
 }
 
 void playfield::load_textures()
