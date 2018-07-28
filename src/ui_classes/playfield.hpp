@@ -156,15 +156,14 @@ void playfield::shrink_receptor(int arrow_num)
 
 void playfield::input_handler(sf::Keyboard::Key key)
 {
-	if (key == sf::Keyboard::Q)
+	// andrew pls make these a textfile config in $HOME or something
+	if (key == sf::Keyboard::Q || key == sf::Keyboard::I)
 		shrink_receptor(LEFT);
-	if (key == sf::Keyboard::W)
+	if (key == sf::Keyboard::W || key == sf::Keyboard::D)
 		shrink_receptor(DOWN);
-
-	if (key == sf::Keyboard::O)
+	if (key == sf::Keyboard::O || key == sf::Keyboard::F)
 		shrink_receptor(UP);
-
-	if (key == sf::Keyboard::P)
+	if (key == sf::Keyboard::P || key == sf::Keyboard::H)
 		shrink_receptor(RIGHT);
 
 }
