@@ -45,19 +45,16 @@ int main()
 	//Pointer for housing state
 	base_screenstate* screenstate(&playfield_inst);
 
-	// RECEPTOR SETUP -----------------------------------------------------------------------
+	// RECEPTOR SETUP --------------------------------------------------------------
 
-	/*
-	// receptor blinking
-	sf::Clock receptor_clock;
-	sf::Time receptor_time = receptor_clock.getElapsedTime();
+	// sf::Clock receptor_clock;
+	// sf::Time receptor_time = receptor_clock.getElapsedTime();
+	// std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, 
+	// receptor_texture_2 }}};
 
-	std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, receptor_texture_2 }}};
-	*/
+	// -----------------------------------------------------------------------------
 
-	// --------------------------------------------------------------------------------------
-
-	// MAIN LOOP ----------------------------------------------------------------------------
+	// MAIN LOOP -------------------------------------------------------------------
 
 	while (window.isOpen())
 	{
@@ -88,33 +85,34 @@ int main()
 			}
 		}
 
-	/*
-	// blinking
-	receptor_time = receptor_clock.getElapsedTime();
-	if ( receptor_time >= sf::milliseconds(1000) )
-	{
-	receptor_clock.restart();
+		// Receptor blinking effect
+		// receptor_time = receptor_clock.getElapsedTime();
+		// if ( receptor_time >= sf::milliseconds(1000) )
+		// {
+		// receptor_clock.restart();
 
-	// rotate the queue
-	receptor_texture_queue.push(receptor_temp_texture);
-	receptor_temp_texture = receptor_texture_queue.front();
-	receptor_texture_queue.pop();
+		// rotate the queue
+		// receptor_texture_queue.push(receptor_temp_texture);
+		// receptor_temp_texture = receptor_texture_queue.front();
+		// receptor_texture_queue.pop();
 
-	receptor_texture_0.swap(receptor_temp_texture);
-	}
-	*/
-	screenstate->loop_function();
+		// receptor_texture_0.swap(receptor_temp_texture);
+		// }
 
-	// = Clear screen ===========================================================
+		screenstate->loop_function();
+
+		// = Clear screen ===========================================================
 		window.clear();
 
-	// = Draw from screenstate vector ===========================================
-	for (auto &sprite : screenstate->sprite_draw_vector)
-		window.draw(*sprite);
+		// = Draw from screenstate vector ===========================================
+		for (auto &sprite : screenstate->sprite_draw_vector) 
+		{
+			window.draw(*sprite);
+		}
+			
 
-	// = Update the window ======================================================
+		// = Update the window ======================================================
 		window.display();
 	}
-
-	// --------------------------------------------------------------------------------------
+	// -------------------------------------------------------------------------------
 }

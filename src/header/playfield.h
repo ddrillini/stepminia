@@ -28,7 +28,6 @@ private:
 	sf::Texture bg_texture;
 
 	// = Sprites ========================================================
-
 	sf::Sprite bg;
 	std::vector<sf::Sprite> receptor_vector;
 	std::vector<sf::Clock> receptor_clock_vector;
