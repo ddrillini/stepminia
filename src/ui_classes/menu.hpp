@@ -6,6 +6,7 @@ public:
 	menu();
 	void loop_function();
 	void input_handler(sf::Keyboard::Key key);
+	~menu() override;
 private:
 	void load_textures();
 	void create_sprites();
@@ -19,12 +20,16 @@ private:
 
 };
 
-
 menu::menu()
 {
 	load_textures();
 	create_sprites();
 	create_logic();
+}
+
+menu::~menu()
+{
+
 }
 
 void menu::loop_function()

@@ -8,7 +8,8 @@ public:
 	void loop_function() override;
 	void shrink_receptor(int arrow_num);
 	void input_handler(sf::Keyboard::Key key) override;
-	// do we need to dealloc the vector in a destructor?
+	~playfield() override;
+
 private:
 	void load_textures() override;
 	void create_sprites() override;
@@ -41,6 +42,11 @@ playfield::playfield()
 
 	create_sprites();
 	create_logic();
+}
+
+playfield::~playfield() 
+{
+
 }
 
 void playfield::load_textures()
