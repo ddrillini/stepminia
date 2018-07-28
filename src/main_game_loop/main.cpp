@@ -7,15 +7,17 @@
 
 #include "../all_includes.h"
 
+#ifdef _WIN32
 #define _CRTDBG_MAP_ALLOC  
 #include <stdlib.h>  
 #include <crtdbg.h>  
+#endif
 
 int main()
 {
 	std::cout << "Note that stepminia must currently be run from the"
-		<< "executable's directory, because it expects the assets folder"
-		<< "to be in the current working directory." << std::endl;
+		<< " executable's directory, because it expects the assets folder"
+		<< " to be in the current working directory." << std::endl;
 
 	#include "window_setup.cpp"
 
@@ -29,5 +31,7 @@ int main()
 	#include "receptor_setup.cpp"
 	#include "main_loop.cpp"
 
+	#ifdef _WIN32
 	_CrtDumpMemoryLeaks();
+	#endif
 }

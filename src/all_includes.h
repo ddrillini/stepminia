@@ -13,6 +13,6 @@
 
 #define OFFSET_FROM_TOP_OF_SCREEN 32
 
-#include "../ui_classes/base_screenstate.hpp"
-#include "../ui_classes/menu.hpp"
-#include "../ui_classes/playfield.hpp"
+#include "ui_classes/base_screenstate.hpp"
+#include "ui_classes/menu.hpp"
+#include "ui_classes/playfield.hpp"

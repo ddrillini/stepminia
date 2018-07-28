@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.12)
 project(stepminia)
 set(CMAKE_CXX_STANDARD 11)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 # static libraries. for linux, this is what we want. mac uses "Frameworks"
 # and those aren't allowed to be static.
 # set(SFML_STATIC_LIBRARIES TRUE)
