@@ -1,4 +1,4 @@
-#include "../header/menu.h"
+#include "menu.hpp"
 
 menu::menu()
 {

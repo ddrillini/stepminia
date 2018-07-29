@@ -1,4 +1,4 @@
-#include "../header/playfield.h"
+#include "playfield.hpp"
 
 // all of these must be included once per link
 playfield::playfield()

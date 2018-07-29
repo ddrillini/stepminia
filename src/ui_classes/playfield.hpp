@@ -1,7 +1,7 @@
 #pragma once // once per compilation unit
 
-#include "base_screenstate.h"
-#include "constants.h"
+#include "base_screenstate.hpp"
+#include "constants.hpp"
 
 class playfield : public base_screenstate
 {

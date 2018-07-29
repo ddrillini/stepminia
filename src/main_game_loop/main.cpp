@@ -5,7 +5,7 @@
 #include <queue>
 #include <ctime>
 
-#include "../all_includes.h"
+#include "../all_includes.hpp"
 
 int main()
 {

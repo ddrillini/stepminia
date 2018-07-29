@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base_screenstate.h"
+#include "base_screenstate.hpp"
 
 class menu : public base_screenstate
 {
