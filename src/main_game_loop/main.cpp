@@ -13,7 +13,7 @@ int main()
 		<< " executable's directory, because it expects the assets folder"
 		<< " to be in the current working directory." << std::endl;
 
-	// WINDOW SETUP ------------------------------------------------------
+	// = Window Setup =====================================================
 
 	// OpenGL settings. Aliasing, bit depth, etc.
 	sf::ContextSettings context_settings;
@@ -36,40 +36,38 @@ int main()
 	// see: https://www.sfml-dev.org/tutorials/2.5/graphics-draw.php,
 	// bottom of page.
 
-	// -------------------------------------------------------------------
+	// = End Window Setup =================================================
 
-	//Game States
+	// Game States
 	playfield playfield_inst;
 	menu menu_inst;
 
-	//Pointer for housing state
+	// Pointer for housing state
 	base_screenstate* screenstate(&playfield_inst);
 
-	// RECEPTOR SETUP --------------------------------------------------------------
-
+	// = Receptor Setup ===================================================
+	// TODO: move me to to the playfield
 	// sf::Clock receptor_clock;
 	// sf::Time receptor_time = receptor_clock.getElapsedTime();
 	// std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, 
 	// receptor_texture_2 }}};
 
-	// -----------------------------------------------------------------------------
+	// = End Receptor Setup ===============================================
 
-	// MAIN LOOP -------------------------------------------------------------------
+	// = Main Loop ========================================================
 
 	while (window.isOpen())
 	{
 		sf::Time current_time;
-
-		// Process events
 		sf::Event event;
+
 		while (window.pollEvent(event))
 		{
+			// Global keypresses (ie, not per-screen)
 			if (event.type == sf::Event::KeyPressed)
 			{
 				if (event.key.code == sf::Keyboard::Escape)
-				{
 					window.close();
-				}
 
 				if (event.key.code == sf::Keyboard::Num1) 
 				{
@@ -81,10 +79,13 @@ int main()
 					screenstate = &playfield_inst;
 				}	
 
+				// otherwise defer to the active screen class's input
+				// handler
 				screenstate->input_handler(event.key.code);
 			}
 		}
 
+		// TODO: offload into playfield class
 		// Receptor blinking effect
 		// receptor_time = receptor_clock.getElapsedTime();
 		// if ( receptor_time >= sf::milliseconds(1000) )
@@ -99,20 +100,19 @@ int main()
 		// receptor_texture_0.swap(receptor_temp_texture);
 		// }
 
+		// Every state has a function that's called every loop, for things
+		// that depend on the frame.
 		screenstate->loop_function();
 
-		// = Clear screen ===========================================================
-		window.clear();
+		// = Drawing functions ============================================
+		window.clear(); // clear screen
 
-		// = Draw from screenstate vector ===========================================
+		// Draw from screenstate vector
 		for (auto &sprite : screenstate->sprite_draw_vector) 
-		{
 			window.draw(*sprite);
-		}
-			
 
-		// = Update the window ======================================================
+		// Update the window
 		window.display();
 	}
-	// -------------------------------------------------------------------------------
+	// = End Main Loop ====================================================
 }
