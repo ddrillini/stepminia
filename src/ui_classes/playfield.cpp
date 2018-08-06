@@ -1,5 +1,6 @@
 #include "playfield.hpp"
 #include <memory>
+#include <cstdlib> // TODO: removeme
 
 // all of these must be included once per link
 playfield::playfield()
@@ -20,6 +21,7 @@ playfield::~playfield()
 
 void playfield::load_textures()
 {
+	std::srand(std::time(nullptr)); // TODO: removeme
 	// where should textures get stored? inside the class, one by one?
 	// vector?: no, then we can't get at them by name anymore.
 	if (!arrow_texture.loadFromFile("assets/arrow.png"))
@@ -138,6 +140,7 @@ void playfield::input_handler(sf::Keyboard::Key key)
 	if (key == sf::Keyboard::Space)
 	{
 		std::shared_ptr<sf::Sprite> blah ( new sf::Sprite(arrow_texture) );
+		blah->setPosition(std::rand() % 640, std::rand() % 480);
 		dynamic_draw_vector.push_back(blah);
 	}
 
