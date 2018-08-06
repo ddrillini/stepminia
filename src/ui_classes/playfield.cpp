@@ -1,4 +1,5 @@
 #include "playfield.hpp"
+#include <memory>
 
 // all of these must be included once per link
 playfield::playfield()
@@ -136,16 +137,13 @@ void playfield::input_handler(sf::Keyboard::Key key)
 	// TODO: offlaod this to a function
 	if (key == sf::Keyboard::Space)
 	{
-		sf::Texture * bleh = new sf::Texture(arrow_texture);
-		sf::Sprite * blah = new sf::Sprite(*bleh);
+		std::shared_ptr<sf::Sprite> blah ( new sf::Sprite(arrow_texture) );
 		dynamic_draw_vector.push_back(blah);
 	}
 
 	// delete dynamically-drawn arrows
 	if (key == sf::Keyboard::Backspace)
 	{
-		sf::Sprite * temp = dynamic_draw_vector.front();
 		dynamic_draw_vector.pop_back();
-		delete temp;
 	}
 }
