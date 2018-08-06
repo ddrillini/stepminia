@@ -23,12 +23,16 @@ private:
 	sf::Texture arrow_texture;
 
 	// we should make an "animated sprite" class and offload logic into that.
-	sf::Texture receptor_texture_0, receptor_texture_1, receptor_texture_2, receptor_texture_3;
-	sf::Texture receptor_temp_texture;
+	sf::Texture active_receptor_texture;
 	sf::Texture bg_texture;
 
 	// = Sprites ========================================================
 	sf::Sprite bg;
 	std::vector<sf::Sprite> receptor_vector;
 	std::vector<sf::Clock> receptor_clock_vector;
+
+	// = Other ==========================================================
+	sf::Clock receptor_clock;
+	std::vector<sf::Texture> receptor_texture_vector;
+
 };

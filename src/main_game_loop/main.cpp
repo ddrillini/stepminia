@@ -44,13 +44,6 @@ int main()
 	// Pointer for housing state
 	base_screenstate* screenstate(&playfield_inst);
 
-	// = Receptor Setup ===================================================
-	// TODO: move me to to the playfield
-	// sf::Clock receptor_clock;
-	// sf::Time receptor_time = receptor_clock.getElapsedTime();
-	// std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, 
-	// receptor_texture_2 }}};
-
 	// = Simfile Reading ==================================================
 
 	notedata simfile1("songs/first/\"\"\"simfile\"\"\".sm");
@@ -85,21 +78,6 @@ int main()
 				screenstate->input_handler(event.key.code);
 			}
 		}
-
-		// TODO: offload into playfield class
-		// Receptor blinking effect
-		// receptor_time = receptor_clock.getElapsedTime();
-		// if ( receptor_time >= sf::milliseconds(1000) )
-		// {
-		// receptor_clock.restart();
-
-		// rotate the queue
-		// receptor_texture_queue.push(receptor_temp_texture);
-		// receptor_temp_texture = receptor_texture_queue.front();
-		// receptor_texture_queue.pop();
-
-		// receptor_texture_0.swap(receptor_temp_texture);
-		// }
 
 		// Every state has a function that's called every loop, for things
 		// that depend on the frame.

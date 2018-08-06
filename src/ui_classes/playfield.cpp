@@ -4,11 +4,9 @@
 // all of these must be included once per link
 playfield::playfield()
 {
-	// what's the difference between these two?
-	// playfield::load_textures(); // member pointer: obscure feature of cpp
-	this->load_textures(); // accesses the member
-						   // however, the this-> is optional
-
+	// what's the difference between these two? nothing.
+	// playfield::load_textures();
+	this->load_textures(); // accesses the member. however, the this-> is optional
 	create_sprites();
 	create_logic();
 }
@@ -32,19 +30,19 @@ void playfield::load_textures()
 	sf::IntRect r3(ARROW_SIZE * 3, 0, ARROW_SIZE, ARROW_SIZE);
 
 	// = Load them into textures ================================================
-	if (!receptor_texture_0.loadFromFile("assets/receptor.png", r0))
+	if (!active_receptor_texture.loadFromFile("assets/receptor.png", r0))
 		abort();
 
-	if (!receptor_texture_1.loadFromFile("assets/receptor.png", r1))
+	receptor_texture_vector = std::vector<sf::Texture>(3, sf::Texture());
+
+	if (!receptor_texture_vector[0].loadFromFile("assets/receptor.png", r1))
 		abort();
 
-	if (!receptor_texture_2.loadFromFile("assets/receptor.png", r2))
+	if (!receptor_texture_vector[1].loadFromFile("assets/receptor.png", r2))
 		abort();
 
-	if (!receptor_texture_3.loadFromFile("assets/receptor.png", r3))
+	if (!receptor_texture_vector[2].loadFromFile("assets/receptor.png", r3))
 		abort();
-
-	receptor_temp_texture = receptor_texture_3;
 
 	if (!bg_texture.loadFromFile("assets/bg.png"))
 		abort();
@@ -54,7 +52,7 @@ void playfield::create_sprites()
 {
 	// = Create receptor sprites ================================================
 	// create 4 sprites in the receptor vector
-	receptor_vector = std::vector<sf::Sprite>(4, sf::Sprite(receptor_temp_texture));
+	receptor_vector = std::vector<sf::Sprite>(4, sf::Sprite(active_receptor_texture));
 	// create an anonymous vector to use that convenient count constructor
 	// copy construct it into the class's receptor_vector
 
@@ -82,7 +80,7 @@ void playfield::create_sprites()
 
 	// bg sprite
 	bg = sf::Sprite(bg_texture);
-	sprite_draw_vector.insert(sprite_draw_vector.begin(), &bg);
+	sprite_draw_vector.insert(sprite_draw_vector.begin(), &bg); // draw it first
 }
 
 void playfield::create_logic()
@@ -113,6 +111,28 @@ void playfield::loop_function()
 		if (t < sf::seconds(.1))
 			scale_receptor(t, receptor_vector[i]);
 	}
+
+	// Receptor blinking effect
+	sf::Time receptor_time = receptor_clock.getElapsedTime();
+	if ( receptor_time >= sf::milliseconds(1000) )
+	{
+		// this is kinda shitty.
+		// TODO: write a circular data type in an animated sprite class and just step through that at
+		// each tick.
+		receptor_clock.restart();
+
+		// we have four locations. one is active, three are not.
+		// swap out the active one for whatever's at the front.
+		active_receptor_texture.swap(receptor_texture_vector.front()); // 0 is the drawn one.
+
+		// rotate the vector
+		// put the old one at the end of the vector
+		sf::Texture temp = receptor_texture_vector.front();
+		receptor_texture_vector.erase(receptor_texture_vector.begin()); // remove front, O(n)
+		receptor_texture_vector.push_back(temp);
+
+	}
+
 }
 
 // actually just resets the clock.
