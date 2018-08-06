@@ -18,7 +18,6 @@ find_package(SFML 2.5 COMPONENTS graphics audio window REQUIRED)
 
 add_subdirectory(main_game_loop)
 add_subdirectory(ui_classes)
-add_subdirectory(data_structures)
 add_subdirectory(utils)
 
 # can't be just "ui_classes"; you need to use the object library generator syntax.
@@ -26,7 +25,6 @@ add_subdirectory(utils)
 add_executable(stepminia
 	$<TARGET_OBJECTS:main_game_loop>
 	$<TARGET_OBJECTS:ui_classes>
-	$<TARGET_OBJECTS:data_structures>
 	$<TARGET_OBJECTS:utils>
 )
 target_link_libraries(stepminia sfml-graphics sfml-audio sfml-window)

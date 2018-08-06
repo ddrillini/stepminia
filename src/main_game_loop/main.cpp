@@ -14,7 +14,6 @@ int main()
 		<< " to be in the current working directory." << std::endl;
 
 	// = Window Setup =====================================================
-
 	// OpenGL settings. Aliasing, bit depth, etc.
 	sf::ContextSettings context_settings;
 	context_settings.antialiasingLevel = 8;
@@ -38,7 +37,7 @@ int main()
 
 	// = End Window Setup =================================================
 
-	// Game States
+	// = UI Setup =========================================================
 	playfield playfield_inst;
 	menu menu_inst;
 
@@ -52,7 +51,9 @@ int main()
 	// std::queue<sf::Texture> receptor_texture_queue {{{ receptor_texture_1, 
 	// receptor_texture_2 }}};
 
-	// = End Receptor Setup ===============================================
+	// = Simfile Reading ==================================================
+
+	notedata simfile1("songs/first/\"\"\"simfile\"\"\".sm");
 
 	// = Main Loop ========================================================
 
