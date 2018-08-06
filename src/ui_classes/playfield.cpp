@@ -77,7 +77,7 @@ void playfield::create_sprites()
 
 	// push them into the draw_vector
 	for (auto &sprite : receptor_vector)
-		this->sprite_draw_vector.push_back(&sprite);
+		sprite_draw_vector.push_back(&sprite);
 
 	// bg sprite
 	bg = sf::Sprite(bg_texture);
@@ -132,4 +132,20 @@ void playfield::input_handler(sf::Keyboard::Key key)
 	if (key == sf::Keyboard::P || key == sf::Keyboard::H)
 		shrink_receptor(RIGHT);
 
+	// draw an arrow (dynamically) when key is pressed
+	// TODO: offlaod this to a function
+	if (key == sf::Keyboard::Space)
+	{
+		sf::Texture * bleh = new sf::Texture(arrow_texture);
+		sf::Sprite * blah = new sf::Sprite(*bleh);
+		dynamic_draw_vector.push_back(blah);
+	}
+
+	// delete dynamically-drawn arrows
+	if (key == sf::Keyboard::Backspace)
+	{
+		sf::Sprite * temp = dynamic_draw_vector.front();
+		dynamic_draw_vector.pop_back();
+		delete temp;
+	}
 }

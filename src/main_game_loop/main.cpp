@@ -107,8 +107,12 @@ int main()
 		// = Drawing functions ============================================
 		window.clear(); // clear screen
 
-		// Draw from screenstate vector
+		// Draw from static vector
 		for (auto &sprite : screenstate->sprite_draw_vector) 
+			window.draw(*sprite);
+
+		// Draw from dynamic vector
+		for (auto &sprite : screenstate->dynamic_draw_vector) 
 			window.draw(*sprite);
 
 		// Update the window
