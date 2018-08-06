@@ -1,0 +1,4 @@
+class note_data
+{
+
+};
