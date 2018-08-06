@@ -6,4 +6,3 @@
 #include "ui_classes/playfield.hpp"
 
 #include "utils/notedata.hpp"
-#include "utils/parser.hpp"
