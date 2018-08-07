@@ -1,4 +1,6 @@
 #include "notedata.hpp"
+#include <iostream>
+#include <fstream>
 
 notedata::notedata(std::string filename)
 {
@@ -9,6 +11,14 @@ notedata::notedata(std::string filename)
 	0000
 	1001 */
 	// read entire file into a single string.
+
+	std::ifstream ifs (filename, std::ifstream::in);
+
+	if ( ifs.fail() )
+		abort();
+
+	for (std::string line; std::getline(ifs, line); )
+        std::cout << line << std::endl;
 
 	// in parser.cpp, iterate over the string, parse each line into a class
 	// beat, that simply contains int LEFT, DOWN, UP, RIGHT; throw these
