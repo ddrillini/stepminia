@@ -19,6 +19,7 @@ class measure
 {
 public:
 	measure() = default;
+	measure(std::string str);
 	std::queue<note> note_queue;
 };
 

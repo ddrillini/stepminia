@@ -33,6 +33,11 @@ note::note(std::string str)
 	if ( str[1] == '1' ) right = 1;
 }
 
+measure::measure(std::string str)
+{
+	std::cout << "- LINE START | " << str << " | LINE END -" << std::endl;
+}
+
 chart::chart(std::string str)
 {
 }
@@ -52,20 +57,26 @@ notedata::notedata(std::string filename)
 	// parse #NOTES: until the final, fifth colon
 
 	// parse 0000 columns
-	/*
-	for (std::string line; std::getline(ifs, line, ','); )
+	for (std::string line; std::getline(ifs, line); )
 	// this is a regular for loop, though it looks fancy
 	{
-		// if ;, we are done with the simfile
-		if ( line == ";" )
+		// if ;, we are done with the current difficulty
+		if ( line.find(";") != -1 )
 			break;
 
+		// we're done with the measure
+		// TODO: create a new one next iteration
+		if ( line.find(",") != -1 )
+			continue;
+
+		// TODO: add notes to the current measure
 		// create a measure, fill it with notes
 		measure measure_inst(line);
 
-		measure_inst.note_queue.push(note_inst);
+		// measure_inst.note_queue.push(note_inst);
 	}
 
+	/*
 	chart_inst.measure_queue.push(measure_inst);
 	*/
 
