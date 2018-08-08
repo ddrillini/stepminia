@@ -2,6 +2,7 @@
 
 #include "base_screenstate.hpp"
 #include "constants.hpp"
+#include "../utils/notedata.hpp"
 
 class playfield : public base_screenstate
 {
@@ -11,6 +12,8 @@ public:
 	void shrink_receptor(int arrow_num);
 	void input_handler(sf::Keyboard::Key key) override;
 	~playfield() override;
+
+	notedata active_simfile;
 
 private:
 	void load_textures() override;

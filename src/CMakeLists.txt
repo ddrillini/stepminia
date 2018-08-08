@@ -4,6 +4,8 @@ project(stepminia)
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wfatal-errors") # quit after first error
+
 
 # static libraries. for linux, this is what we want. mac uses "Frameworks"
 # and those aren't allowed to be static.

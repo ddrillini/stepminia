@@ -46,7 +46,8 @@ int main()
 
 	// = Simfile Reading ==================================================
 
-	notedata simfile1("songs/first/\"\"\"simfile\"\"\".sm");
+	notedata simfile_inst("songs/first/\"\"\"simfile\"\"\".sm");
+	playfield_inst.active_simfile = simfile_inst;
 
 	// = Main Loop ========================================================
 
@@ -80,7 +81,12 @@ int main()
 		}
 
 		// Every state has a function that's called every loop, for things
-		// that depend on the frame.
+		// that depend on the frame. Since that's 60fps, arrow/timing
+		// calculations should probably happen... in another thread?
+		// I'm not sure how fast this game loop runs. It's either tied to
+		// the framerate and therefore capped at 60fps, or it's as fast as
+		// possible. But, I doubt that's the case, else it'd tear up my CPU
+		// fan.
 		screenstate->loop_function();
 
 		// = Drawing functions ============================================

@@ -1,50 +1,74 @@
 #include "notedata.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
 
-// contains notedata and beat types
+// contains notedata and note types
 
-beat::beat(std::string str)
-{
-	// L D U R
-	if ( str[0] == '1' )
-		left = 1;
-	if ( str[1] == '1' )
-		down = 1;
-	if ( str[2] == '1' )
-		up = 1;
-	if ( str[1] == '1' )
-		right = 1;
+// string splitting functions because the STL doesn't have any 🔪🔪🔪
+// https://stackoverflow.com/a/236803/1234621
+template<typename Out>
+void split(const std::string &s, char delim, Out result) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        *(result++) = item;
+    }
 }
 
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
+note::note(std::string str)
+{
+	if ( str[0] == '1' ) left = 1;
+	if ( str[1] == '1' ) down = 1;
+	if ( str[2] == '1' ) up = 1;
+	if ( str[1] == '1' ) right = 1;
+}
+
+chart::chart(std::string str)
+{
+}
+
+// Construct a notedata. Takes filename_string, instantiates chart type.
 notedata::notedata(std::string filename)
 {
-	// open the file
-	/* looks like
-	0000
-	0110
-	0000
-	1001 */
-	// read entire file into a single string.
-
 	std::ifstream ifs (filename, std::ifstream::in);
 
 	if ( ifs.fail() )
 		abort();
 
-	for (std::string line; std::getline(ifs, line); )
+	// fields that are global to all difficulties:
+	// parse all the #TITLE:whatever; into a vector of pairs of strings
+
+	// = Difficulty-specific fields =========================================
+	// parse #NOTES: until the final, fifth colon
+
+	// parse 0000 columns
+	/*
+	for (std::string line; std::getline(ifs, line, ','); )
+	// this is a regular for loop, though it looks fancy
 	{
-		beat beat_inst(line);
-		note_queue.push(beat_inst);
+		// if ;, we are done with the simfile
+		if ( line == ";" )
+			break;
+
+		// create a measure, fill it with notes
+		measure measure_inst(line);
+
+		measure_inst.note_queue.push(note_inst);
 	}
 
-	// in parser.cpp, iterate over the string, parse each line into a class
-	// beat, that simply contains int LEFT, DOWN, UP, RIGHT; throw these
-	// all into a queue inside the notedata class
+	chart_inst.measure_queue.push(measure_inst);
+	*/
 
-	// main should look roughly like 
-	// notedata simfile1("filename");
-	// simfile1.parse; // parses simfile string into a queue of beats
-	// then maybe try drawing this to the screen, but you'll have to figure
-	// out that
+	// TODO: this should be handled by the main menu and should hand multiple difficulties
+	// expert_chart = chart_inst; 
 }

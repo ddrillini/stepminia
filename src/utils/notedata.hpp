@@ -2,27 +2,45 @@
 #include <string>
 #include <queue>
 
-// contains notedata and beat types
+// contains notedata and note types
 
-// not really a beat so much as a subdivision
-class beat
+class note
 {
 public:
-	explicit beat(std::string str);
+	explicit note(std::string str);
 
-	int left = 0;
-	int down = 0;
-	int up = 0;
-	int right = 0;
+	char left = 0;
+	char down = 0;
+	char up = 0;
+	char right = 0;
+};
+
+class measure
+{
+public:
+	measure() = default;
+	std::queue<note> note_queue;
+};
+
+class chart
+{
+public:
+	chart() = default; // means we don't want to actually implement this
+	explicit chart(std::string str);
+	std::queue<measure> measure_queue;
 };
 
 class notedata
 {
 public:
+	notedata() = default;
 	explicit notedata(std::string filename); // explict to avoid implicit conversion
 	// this is a problem with one-arg constructors.
 	// that means that if you have a function foo(notedata)
 	// and you pass a string by accident, you'll call the notedata
 	// constructor instead of failing to compile
-	std::queue<beat> note_queue;
+
+	// TODO: setter function to set the current chart inside the notedata
+	// object, and getter to get eg the next row
+	chart expert_chart;
 };

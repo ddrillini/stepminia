@@ -117,8 +117,8 @@ void playfield::loop_function()
 	if ( receptor_time >= sf::milliseconds(1000) )
 	{
 		// this is kinda shitty.
-		// TODO: write a circular data type in an animated sprite class and just step through that at
-		// each tick.
+		// TODO: write a circular data type in an animated sprite class and
+		// just step through that at each tick.
 		receptor_clock.restart();
 
 		// we have four locations. one is active, three are not.
@@ -130,9 +130,18 @@ void playfield::loop_function()
 		sf::Texture temp = receptor_texture_vector.front();
 		receptor_texture_vector.erase(receptor_texture_vector.begin()); // remove front, O(n)
 		receptor_texture_vector.push_back(temp);
-
 	}
-
+	
+	// Draw things from the notedata structure.
+	/*
+	measure current_measure = active_simfile.active_chart.measure_queue.front();
+	note current_note = current_measure.note_queue.front();
+	if (current_note.left == 1)
+	{
+		std::shared_ptr<sf::Sprite> blah ( new sf::Sprite(arrow_texture) );
+		dynamic_draw_vector.push_back(blah);
+	}
+	*/
 }
 
 // actually just resets the clock.
