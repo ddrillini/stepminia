@@ -2,6 +2,21 @@
 #include <iostream>
 #include <fstream>
 
+// contains notedata and beat types
+
+beat::beat(std::string str)
+{
+	// L D U R
+	if ( str[0] == '1' )
+		left = 1;
+	if ( str[1] == '1' )
+		down = 1;
+	if ( str[2] == '1' )
+		up = 1;
+	if ( str[1] == '1' )
+		right = 1;
+}
+
 notedata::notedata(std::string filename)
 {
 	// open the file
@@ -18,7 +33,10 @@ notedata::notedata(std::string filename)
 		abort();
 
 	for (std::string line; std::getline(ifs, line); )
-        std::cout << line << std::endl;
+	{
+		beat beat_inst(line);
+		note_queue.push(beat_inst);
+	}
 
 	// in parser.cpp, iterate over the string, parse each line into a class
 	// beat, that simply contains int LEFT, DOWN, UP, RIGHT; throw these
