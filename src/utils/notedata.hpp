@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <queue>
+#include <deque>
 
 // contains notedata and note types
 
@@ -15,27 +15,27 @@ public:
 	char right = 0;
 };
 
+std::ostream& operator<<(std::ostream&, const note&);
+
 class measure
 {
 public:
-	measure() = default;
-	measure(std::string str);
-	std::queue<note> note_queue;
+	std::deque<note> note_deque;
 };
 
 class chart
 {
 public:
 	chart() = default; // means we don't want to actually implement this
-	explicit chart(std::string str);
-	std::queue<measure> measure_queue;
+	std::deque<measure> measure_deque;
 };
 
 class notedata
 {
 public:
 	notedata() = default;
-	explicit notedata(std::string filename); // explict to avoid implicit conversion
+	explicit notedata(std::string filename);
+	// explict to avoid implicit conversion
 	// this is a problem with one-arg constructors.
 	// that means that if you have a function foo(notedata)
 	// and you pass a string by accident, you'll call the notedata

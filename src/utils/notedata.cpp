@@ -25,21 +25,35 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
+// << for notes
+std::ostream& operator<<(std::ostream& stream, const note& note_inst)
+{
+	if ( note_inst.left )
+		stream << "1";
+	else
+		stream << "0";
+	if ( note_inst.down )
+		stream << "1";
+	else
+		stream << "0";
+	if ( note_inst.up )
+		stream << "1";
+	else
+		stream << "0";
+	if ( note_inst.right )
+		stream << "1";
+	else
+		stream << "0";
+	stream << std::endl;
+	return stream;
+}
+
 note::note(std::string str)
 {
 	if ( str[0] == '1' ) left = 1;
 	if ( str[1] == '1' ) down = 1;
 	if ( str[2] == '1' ) up = 1;
-	if ( str[1] == '1' ) right = 1;
-}
-
-measure::measure(std::string str)
-{
-	std::cout << "- LINE START | " << str << " | LINE END -" << std::endl;
-}
-
-chart::chart(std::string str)
-{
+	if ( str[3] == '1' ) right = 1;
 }
 
 // Construct a notedata. Takes filename_string, instantiates chart type.
@@ -56,30 +70,34 @@ notedata::notedata(std::string filename)
 	// = Difficulty-specific fields =========================================
 	// parse #NOTES: until the final, fifth colon
 
+	chart chart_inst;
+	measure measure_inst;
+
 	// parse 0000 columns
 	for (std::string line; std::getline(ifs, line); )
 	// this is a regular for loop, though it looks fancy
 	{
-		// if ;, we are done with the current difficulty
+		// ; - we are done with the current difficulty
 		if ( line.find(";") != -1 )
+		{
+			// push the last measure
+			chart_inst.measure_deque.push_back(measure_inst);
 			break;
+		}
 
-		// we're done with the measure
-		// TODO: create a new one next iteration
+		// , - we're done with the measure
 		if ( line.find(",") != -1 )
+		{
+			chart_inst.measure_deque.push_back(measure_inst);
+			measure_inst = measure();
 			continue;
+		}
 
-		// TODO: add notes to the current measure
 		// create a measure, fill it with notes
-		measure measure_inst(line);
-
-		// measure_inst.note_queue.push(note_inst);
+		note note_inst(line);
+		measure_inst.note_deque.push_back(note_inst);
 	}
 
-	/*
-	chart_inst.measure_queue.push(measure_inst);
-	*/
-
 	// TODO: this should be handled by the main menu and should hand multiple difficulties
-	// expert_chart = chart_inst; 
+	expert_chart = chart_inst; 
 }
