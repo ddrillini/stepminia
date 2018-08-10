@@ -11,7 +11,6 @@ public:
 	void loop_function() override;
 	void shrink_receptor(int arrow_num);
 	void input_handler(sf::Keyboard::Key key) override;
-	~playfield() override;
 
 	notedata active_simfile;
 
@@ -21,6 +20,8 @@ private:
 	void create_logic() override;
 
 	void scale_receptor(sf::Time t, sf::Sprite & receptor);
+	void draw_arrow();
+	void draw_note(note & note_inst);
 
 	// = Textures =======================================================
 	sf::Texture arrow_texture;

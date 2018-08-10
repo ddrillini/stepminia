@@ -48,12 +48,18 @@ std::ostream& operator<<(std::ostream& stream, const note& note_inst)
 	return stream;
 }
 
+// "XXXX" string from simfile to memory
 note::note(std::string str)
 {
 	if ( str[0] == '1' ) left = 1;
 	if ( str[1] == '1' ) down = 1;
 	if ( str[2] == '1' ) up = 1;
 	if ( str[3] == '1' ) right = 1;
+}
+
+measure chart::get_top_measure()
+{
+	return measure_deque.front();
 }
 
 // Construct a notedata. Takes filename_string, instantiates chart type.
@@ -100,4 +106,5 @@ notedata::notedata(std::string filename)
 
 	// TODO: this should be handled by the main menu and should hand multiple difficulties
 	expert_chart = chart_inst; 
+	active_chart = &expert_chart;
 }

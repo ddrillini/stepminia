@@ -28,6 +28,7 @@ class chart
 public:
 	chart() = default; // means we don't want to actually implement this
 	std::deque<measure> measure_deque;
+	measure get_top_measure();
 };
 
 class notedata
@@ -43,5 +44,6 @@ public:
 
 	// TODO: setter function to set the current chart inside the notedata
 	// object, and getter to get eg the next row
+	chart * active_chart;
 	chart expert_chart;
 };

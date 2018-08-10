@@ -11,11 +11,6 @@ playfield::playfield()
 	create_logic();
 }
 
-playfield::~playfield()
-{
-
-}
-
 void playfield::load_textures()
 {
 	// where should textures get stored? inside the class, one by one?
@@ -132,6 +127,10 @@ void playfield::loop_function()
 		receptor_texture_vector.push_back(temp);
 	}
 	
+	chart * c = active_simfile.active_chart;
+	measure m = c->get_top_measure();
+	draw_note(m.note_deque.front());
+
 	// Draw things from the notedata structure.
 	/*
 	measure current_measure = active_simfile.active_chart.measure_queue.front();
@@ -144,9 +143,9 @@ void playfield::loop_function()
 	*/
 }
 
-// actually just resets the clock.
 void playfield::shrink_receptor(int arrow_num)
 {
+	// actually just resets the clock.
 	receptor_clock_vector[arrow_num].restart();
 }
 
@@ -175,4 +174,27 @@ void playfield::input_handler(sf::Keyboard::Key key)
 	{
 		dynamic_draw_vector.pop_back();
 	}
+}
+
+void playfield::draw_arrow()
+{
+	std::shared_ptr<sf::Sprite> arrow ( new sf::Sprite(arrow_texture) );
+	dynamic_draw_vector.push_back(arrow);
+}
+
+// draw the first measure on the screen in the middle
+void playfield::draw_note(note & note_inst)
+{
+	// allocate four sprite(arrow textures
+	draw_arrow();
+	
+	/*
+	int offset = ARROW_SIZE * -1.5;
+	for (auto &sprite : receptor_vector)
+	{
+		sprite.setPosition(WINDOW_X_CENTER + offset,
+			OFFSET_FROM_TOP_OF_SCREEN + 32);
+		offset += ARROW_SIZE;
+	}
+	*/
 }
