@@ -129,7 +129,7 @@ void playfield::loop_function()
 	
 	chart * c = active_simfile.active_chart;
 	measure m = c->get_top_measure();
-	draw_note(m.note_deque.front());
+	draw_measure(m.note_deque.front());
 
 	// Draw things from the notedata structure.
 	/*
@@ -178,23 +178,36 @@ void playfield::input_handler(sf::Keyboard::Key key)
 
 void playfield::draw_arrow()
 {
-	std::shared_ptr<sf::Sprite> arrow ( new sf::Sprite(arrow_texture) );
-	dynamic_draw_vector.push_back(arrow);
 }
 
 // draw the first measure on the screen in the middle
-void playfield::draw_note(note & note_inst)
+// TODO: this should decide whether to allocate, then update existing
+// sprites.
+void playfield::draw_measure(note & note_inst)
 {
-	// allocate four sprite(arrow textures
-	draw_arrow();
-	
-	/*
-	int offset = ARROW_SIZE * -1.5;
-	for (auto &sprite : receptor_vector)
+	// TODO: something like this should work instead, but it only created one when i tried:
+	// std::vector<std::shared_ptr<sf::Sprite>> v1 ( 4, (std::shared_ptr<sf::Sprite>) new sf::Sprite(arrow_texture) );
+	std::shared_ptr<sf::Sprite> left_arrow ( new sf::Sprite(arrow_texture) );
+	std::shared_ptr<sf::Sprite> down_arrow ( new sf::Sprite(arrow_texture) );
+	std::shared_ptr<sf::Sprite> up_arrow ( new sf::Sprite(arrow_texture) );
+	std::shared_ptr<sf::Sprite> right_arrow ( new sf::Sprite(arrow_texture) );
+
+	std::vector<std::shared_ptr<sf::Sprite>> v1
 	{
-		sprite.setPosition(WINDOW_X_CENTER + offset,
-			OFFSET_FROM_TOP_OF_SCREEN + 32);
+		left_arrow, down_arrow, up_arrow, right_arrow
+	};
+
+	// should be in creation
+	v1[LEFT]->rotate(90);
+	v1[UP]->rotate(180);
+	v1[RIGHT]->rotate(270);
+
+	int offset = ARROW_SIZE * -1.5;
+	for (auto & sprite : v1)
+	{
+		sprite->setOrigin(ARROW_SIZE / 2, ARROW_SIZE / 2); // this should be in creation
+		sprite->setPosition(WINDOW_X_CENTER + offset, OFFSET_FROM_TOP_OF_SCREEN + 32);
+		dynamic_draw_vector.push_back(sprite);
 		offset += ARROW_SIZE;
 	}
-	*/
 }

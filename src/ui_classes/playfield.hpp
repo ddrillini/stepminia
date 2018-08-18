@@ -21,7 +21,7 @@ private:
 
 	void scale_receptor(sf::Time t, sf::Sprite & receptor);
 	void draw_arrow();
-	void draw_note(note & note_inst);
+	void draw_measure(note & note_inst);
 
 	// = Textures =======================================================
 	sf::Texture arrow_texture;
