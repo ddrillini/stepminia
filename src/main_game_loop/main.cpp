@@ -46,7 +46,8 @@ int main()
 
 	// = Simfile Reading ==================================================
 
-	notedata simfile_inst("songs/first/\"\"\"simfile\"\"\".sm");
+	// notedata simfile_inst("songs/first/\"\"\"simfile\"\"\".sm");
+	notedata simfile_inst("songs/Checkpoint/Checkpoint.sm");
 	playfield_inst.active_simfile = simfile_inst;
 
 	// = Main Loop ========================================================
