@@ -21,8 +21,9 @@ private:
 
 	void scale_receptor(sf::Time t, sf::Sprite & receptor);
 	void draw_arrow();
-	void draw_note(note & note_inst);
-	float calculate_note_y_pos(note & note_inst);
+	void draw_note(note & note_inst, int index_in_measure_vector, int index);
+	void draw_measure(measure & m, int index_in_measure_vector);
+	float calculate_note_y_pos(note & note_inst, int index_in_measure_vector, int index);
 
 	// = Textures =======================================================
 	sf::Texture arrow_texture;

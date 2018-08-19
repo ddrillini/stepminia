@@ -130,9 +130,12 @@ void playfield::loop_function()
 	}
 	
 	chart * c = active_simfile.active_chart;
-	measure m = c->get_top_measure();
-	note n = m.note_deque.front();
-	draw_note(n);
+	int index = 0;
+	for ( auto & m : c->measure_deque )
+	{
+		draw_measure(m, index);
+		index++;
+	}
 }
 
 void playfield::shrink_receptor(int arrow_num)
@@ -160,59 +163,68 @@ void playfield::draw_arrow()
 {
 }
 
-/*
-void playfield::allocate_notedata_sprites()
-{
-	// iterate over the chart, allocate sprites for everything.
-}
-*/
-
 // draw the first measure on the screen in the middle
 // TODO: this should decide whether to allocate, then update existing
 // sprites.
-void playfield::draw_note(note & note_inst)
+void playfield::draw_note(note & note_inst, int index_in_measure_vector, int index)
 {
 	// TODO: something like this should work instead, but it only created one when i tried:
 	// std::vector<std::shared_ptr<sf::Sprite>> v1 ( 4, (std::shared_ptr<sf::Sprite>) new sf::Sprite(arrow_texture) );
 
 	std::vector<std::shared_ptr<sf::Sprite>> v1;
 
+
 	if ( note_inst.left )
 	{
 		std::shared_ptr<sf::Sprite> left_arrow ( new sf::Sprite(arrow_texture) );
 		left_arrow->rotate(90);
+		left_arrow->setPosition(LEFT_ARROW_OFFSET, calculate_note_y_pos(note_inst, index_in_measure_vector, index) );
 		v1.push_back(left_arrow);
 	}
 	if ( note_inst.down )
 	{
 		std::shared_ptr<sf::Sprite> down_arrow ( new sf::Sprite(arrow_texture) );
+		down_arrow->setPosition(DOWN_ARROW_OFFSET, calculate_note_y_pos(note_inst, index_in_measure_vector, index) );
 		v1.push_back(down_arrow);
 	}
 	if ( note_inst.up )
 	{
 		std::shared_ptr<sf::Sprite> up_arrow ( new sf::Sprite(arrow_texture) );
 		up_arrow->rotate(180);
+		up_arrow->setPosition(UP_ARROW_OFFSET, calculate_note_y_pos(note_inst, index_in_measure_vector, index) );
 		v1.push_back(up_arrow);
 	}
 	if ( note_inst.right )
 	{
 		std::shared_ptr<sf::Sprite> right_arrow ( new sf::Sprite(arrow_texture) );
 		right_arrow->rotate(270);
+		right_arrow->setPosition(RIGHT_ARROW_OFFSET, calculate_note_y_pos(note_inst, index_in_measure_vector, index) );
 		v1.push_back(right_arrow);
 	}
 
-	int offset = ARROW_SIZE * -1.5;
 	for (auto & sprite : v1)
 	{
-		sprite->setOrigin(ARROW_SIZE / 2, ARROW_SIZE / 2); // this should be in creation
-		sprite->setPosition(WINDOW_X_CENTER + offset,
-		calculate_note_y_pos(note_inst) );
+		sprite->setOrigin(ARROW_SIZE / 2, ARROW_SIZE / 2);
 		dynamic_draw_vector.push_back(sprite);
-		offset += ARROW_SIZE;
 	}
 }
 
-float playfield::calculate_note_y_pos(note & note_inst)
+void playfield::draw_measure(measure & m, int index_in_measure_vector)
 {
-	return song_clock.getElapsedTime().asSeconds() * 100.0 + OFFSET_FROM_TOP_OF_SCREEN + 32;
+	// TODO used for 8ths notes
+	int subdivisions = m.note_deque.size(); // smallest note of measure, eg 4th, 8th, 16th
+
+	// TODO: pretty sure iterator has a .index or something
+	int index = 0;
+	for ( auto it = m.note_deque.begin(); it != m.note_deque.end(); it++ )
+	{
+		draw_note(*it, index_in_measure_vector, index); // 0-3 for now, but will expand to more when we implement more things later
+		index++;
+	}
+}
+
+float playfield::calculate_note_y_pos(note & note_inst, int index_in_measure_vector, int index)
+{
+	int speedmod = SPEEDMOD;
+	return WINDOW_HEIGHT + (index_in_measure_vector * speedmod * 4) + (speedmod * index) - ( song_clock.getElapsedTime().asSeconds() * speedmod);
 }

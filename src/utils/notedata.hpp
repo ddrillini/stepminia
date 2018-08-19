@@ -31,6 +31,8 @@ public:
 	measure get_top_measure();
 };
 
+std::ostream& operator<<(std::ostream& stream, const measure& m);
+
 class notedata
 {
 public:

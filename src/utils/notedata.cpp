@@ -48,6 +48,15 @@ std::ostream& operator<<(std::ostream& stream, const note& note_inst)
 	return stream;
 }
 
+// << for measures
+std::ostream& operator<<(std::ostream& stream, const measure& m)
+{
+	for ( auto & note : m.note_deque )
+		stream << note;
+	stream << std::endl;
+	return stream;
+}
+
 // "XXXX" string from simfile to memory
 note::note(std::string str)
 {
