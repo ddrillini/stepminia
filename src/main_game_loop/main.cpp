@@ -100,6 +100,10 @@ int main()
 		for (auto &sprite : screenstate->dynamic_draw_vector) 
 			window.draw(*sprite);
 
+		// empty dynamic vector
+		while ( ! screenstate->dynamic_draw_vector.empty() )
+			screenstate->dynamic_draw_vector.pop_back();
+
 		// Update the window
 		window.display();
 	}

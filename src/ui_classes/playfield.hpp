@@ -21,7 +21,8 @@ private:
 
 	void scale_receptor(sf::Time t, sf::Sprite & receptor);
 	void draw_arrow();
-	void draw_measure(note & note_inst);
+	void draw_note(note & note_inst);
+	float calculate_note_y_pos(note & note_inst);
 
 	// = Textures =======================================================
 	sf::Texture arrow_texture;
@@ -37,6 +38,7 @@ private:
 
 	// = Other ==========================================================
 	sf::Clock receptor_clock;
+	sf::Clock song_clock; // tracks time since start of chart
 	std::vector<sf::Texture> receptor_texture_vector;
 
 };

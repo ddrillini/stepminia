@@ -108,3 +108,4 @@ notedata::notedata(std::string filename)
 	expert_chart = chart_inst; 
 	active_chart = &expert_chart;
 }
+

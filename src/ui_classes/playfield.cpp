@@ -1,5 +1,6 @@
 #include "playfield.hpp"
 #include <memory>
+#include <iostream> // TODO: removeme, debugging only
 
 // all of these must be included once per link
 playfield::playfield()
@@ -83,6 +84,7 @@ void playfield::create_logic()
 	// initialize four clocks for receptor shrinking
 	// initialize an anonymous vector and copy it into the class
 	receptor_clock_vector = std::vector<sf::Clock>(4, sf::Clock());
+	song_clock.restart();
 }
 
 // Scales a receptor based on the time since a given
@@ -129,18 +131,8 @@ void playfield::loop_function()
 	
 	chart * c = active_simfile.active_chart;
 	measure m = c->get_top_measure();
-	draw_measure(m.note_deque.front());
-
-	// Draw things from the notedata structure.
-	/*
-	measure current_measure = active_simfile.active_chart.measure_queue.front();
-	note current_note = current_measure.note_queue.front();
-	if (current_note.left == 1)
-	{
-		std::shared_ptr<sf::Sprite> blah ( new sf::Sprite(arrow_texture) );
-		dynamic_draw_vector.push_back(blah);
-	}
-	*/
+	note n = m.note_deque.front();
+	draw_note(n);
 }
 
 void playfield::shrink_receptor(int arrow_num)
@@ -160,54 +152,67 @@ void playfield::input_handler(sf::Keyboard::Key key)
 		shrink_receptor(UP);
 	if (key == sf::Keyboard::P || key == sf::Keyboard::H)
 		shrink_receptor(RIGHT);
-
-	// draw an arrow (dynamically) when key is pressed
-	// TODO: offlaod this to a function
 	if (key == sf::Keyboard::Space)
-	{
-		std::shared_ptr<sf::Sprite> blah ( new sf::Sprite(arrow_texture) );
-		dynamic_draw_vector.push_back(blah);
-	}
-
-	// delete dynamically-drawn arrows
-	if (key == sf::Keyboard::Backspace)
-	{
-		dynamic_draw_vector.pop_back();
-	}
+		song_clock.restart();
 }
 
 void playfield::draw_arrow()
 {
 }
 
+/*
+void playfield::allocate_notedata_sprites()
+{
+	// iterate over the chart, allocate sprites for everything.
+}
+*/
+
 // draw the first measure on the screen in the middle
 // TODO: this should decide whether to allocate, then update existing
 // sprites.
-void playfield::draw_measure(note & note_inst)
+void playfield::draw_note(note & note_inst)
 {
 	// TODO: something like this should work instead, but it only created one when i tried:
 	// std::vector<std::shared_ptr<sf::Sprite>> v1 ( 4, (std::shared_ptr<sf::Sprite>) new sf::Sprite(arrow_texture) );
-	std::shared_ptr<sf::Sprite> left_arrow ( new sf::Sprite(arrow_texture) );
-	std::shared_ptr<sf::Sprite> down_arrow ( new sf::Sprite(arrow_texture) );
-	std::shared_ptr<sf::Sprite> up_arrow ( new sf::Sprite(arrow_texture) );
-	std::shared_ptr<sf::Sprite> right_arrow ( new sf::Sprite(arrow_texture) );
 
-	std::vector<std::shared_ptr<sf::Sprite>> v1
+	std::vector<std::shared_ptr<sf::Sprite>> v1;
+
+	if ( note_inst.left )
 	{
-		left_arrow, down_arrow, up_arrow, right_arrow
-	};
-
-	// should be in creation
-	v1[LEFT]->rotate(90);
-	v1[UP]->rotate(180);
-	v1[RIGHT]->rotate(270);
+		std::shared_ptr<sf::Sprite> left_arrow ( new sf::Sprite(arrow_texture) );
+		left_arrow->rotate(90);
+		v1.push_back(left_arrow);
+	}
+	if ( note_inst.down )
+	{
+		std::shared_ptr<sf::Sprite> down_arrow ( new sf::Sprite(arrow_texture) );
+		v1.push_back(down_arrow);
+	}
+	if ( note_inst.up )
+	{
+		std::shared_ptr<sf::Sprite> up_arrow ( new sf::Sprite(arrow_texture) );
+		up_arrow->rotate(180);
+		v1.push_back(up_arrow);
+	}
+	if ( note_inst.right )
+	{
+		std::shared_ptr<sf::Sprite> right_arrow ( new sf::Sprite(arrow_texture) );
+		right_arrow->rotate(270);
+		v1.push_back(right_arrow);
+	}
 
 	int offset = ARROW_SIZE * -1.5;
 	for (auto & sprite : v1)
 	{
 		sprite->setOrigin(ARROW_SIZE / 2, ARROW_SIZE / 2); // this should be in creation
-		sprite->setPosition(WINDOW_X_CENTER + offset, OFFSET_FROM_TOP_OF_SCREEN + 32);
+		sprite->setPosition(WINDOW_X_CENTER + offset,
+		calculate_note_y_pos(note_inst) );
 		dynamic_draw_vector.push_back(sprite);
 		offset += ARROW_SIZE;
 	}
+}
+
+float playfield::calculate_note_y_pos(note & note_inst)
+{
+	return song_clock.getElapsedTime().asSeconds() * 100.0 + OFFSET_FROM_TOP_OF_SCREEN + 32;
 }
