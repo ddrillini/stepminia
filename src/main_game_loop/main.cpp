@@ -50,6 +50,17 @@ int main()
 	notedata simfile_inst("songs/Checkpoint/Checkpoint.sm");
 	playfield_inst.active_simfile = simfile_inst;
 
+	// = Playing Music ====================================================
+
+    // Load a sound buffer from a wav file
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("songs/Checkpoint/Checkpoint.ogg"))
+        abort();
+
+    // Create a sound instance and play it
+    sf::Sound sound(buffer);
+    sound.play();
+
 	// = Main Loop ========================================================
 
 	while (window.isOpen())

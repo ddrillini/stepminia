@@ -226,5 +226,9 @@ void playfield::draw_measure(measure & m, int index_in_measure_vector)
 float playfield::calculate_note_y_pos(note & note_inst, int index_in_measure_vector, int index)
 {
 	int speedmod = SPEEDMOD;
-	return WINDOW_HEIGHT + (index_in_measure_vector * speedmod * 4) + (speedmod * index) - ( song_clock.getElapsedTime().asSeconds() * speedmod);
+	float bpm = 140;
+	return WINDOW_HEIGHT
+		+ (index_in_measure_vector * speedmod * 4 / 1.4) // move b/c measure in song
+		+ (speedmod * index / 1.4) // move b/c note in measure
+		- ( (song_clock.getElapsedTime().asSeconds() ) * speedmod); // move b/c time elapsed
 }
