@@ -1,3 +1,13 @@
+![](progress.gif)
+
+### Status
+ * Loads simfiles with only quarter notes. Plays them.
+ * Needs to be properly synced.
+ * Needs to implement everything that's not quarter notes.
+ * I'm satisfied with where the project's at for the time being. I learned
+  plenty. I need to finish school, anyhoo.
+
+
 ### Design goals
  * Statically linked
  * parses regular simfiles
