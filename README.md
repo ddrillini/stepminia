@@ -13,6 +13,8 @@
  * parses regular simfiles
  * m630 Cel
  * Works on our cab
+ 
+[Trello board](https://trello.com/b/Zai4JVWl/stepminia).
 
 ### Style
  * Tabs
