@@ -1,4 +1,4 @@
-![](progress.gif)
+![](https://raw.githubusercontent.com/ddrillini/stepminia/master/progress-gifs/5.gif)
 
 ### Status
  * Loads simfiles with only quarter notes. Plays them.
